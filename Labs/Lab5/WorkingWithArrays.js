@@ -44,10 +44,11 @@ export default function WorkingWithArrays(app) {
     res.json(todos);
   };
 
+  // Proper deleteTodo handler with error handling
   const deleteTodo = (req, res) => {
     const { id } = req.params;
     const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
-        if (todoIndex === -1) {
+    if (todoIndex === -1) {
       res.status(404).json({ message: `Unable to delete Todo with ID ${id}` });
       return;
     }
@@ -86,6 +87,7 @@ export default function WorkingWithArrays(app) {
     res.json(todos);
   };
 
+  // Proper updateTodo handler with error handling
   const updateTodo = (req, res) => {
     const { id } = req.params;
     const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
@@ -93,7 +95,6 @@ export default function WorkingWithArrays(app) {
       res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
       return;
     }
-
     todos = todos.map((t) => {
       if (t.id === parseInt(id)) {
         return { ...t, ...req.body };

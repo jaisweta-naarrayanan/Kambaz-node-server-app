@@ -1,10 +1,22 @@
 import UsersDao from "./dao.js";
 export default function UserRoutes(app, db) {
  const dao = UsersDao(db);
-  const createUser = (req, res) => { };
-  const deleteUser = (req, res) => { };
-  const findAllUsers = (req, res) => { };
-  const findUserById = (req, res) => { };
+  const createUser = (req, res) => {
+    const newUser = dao.createUser(req.body);
+    res.json(newUser);
+  };
+  const deleteUser = (req, res) => {
+    const userId = req.params.userId;
+    dao.deleteUser(userId);
+    res.sendStatus(200);
+  };
+  const findAllUsers = (req, res) => {
+    res.json(dao.findAllUsers());
+  };
+  const findUserById = (req, res) => {
+    const userId = req.params.userId;
+    res.json(dao.findUserById(userId));
+  };
   
   const updateUser = (req, res) => { 
     const userId = req.params.userId;
