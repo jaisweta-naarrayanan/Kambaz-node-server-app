@@ -1,9 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
+import quizModel from "../Quizzes/model.js";
 
 export default function QuestionsDao(db) {
   async function findQuestionsForQuiz(quizId) {
     return model.find({ quiz: quizId });
+  }
+
+  async function findQuestionsForCourse(courseId) {
+    const quizzes = await quizModel.find({ course: courseId });
+    const quizIds = quizzes.map((q) => q._id);
+    return model.find({ quiz: { $in: quizIds } });
   }
 
   async function findQuestionById(questionId) {
@@ -29,6 +36,7 @@ export default function QuestionsDao(db) {
 
   return {
     findQuestionsForQuiz,
+    findQuestionsForCourse,
     findQuestionById,
     createQuestion,
     updateQuestion,

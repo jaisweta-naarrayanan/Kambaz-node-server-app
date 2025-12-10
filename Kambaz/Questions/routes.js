@@ -38,7 +38,15 @@ export default function QuestionsRoutes(app, db) {
     res.json(status);
   };
 
+  // Get all questions for a course
+  const findQuestionsForCourse = async (req, res) => {
+    const { cid } = req.params;
+    const questions = await dao.findQuestionsForCourse(cid);
+    res.json(questions);
+  };
+
   // Routes
+  app.get("/api/courses/:cid/questions", findQuestionsForCourse);
   app.get("/api/quizzes/:qid/questions", findQuestionsForQuiz);
   app.get("/api/quizzes/:qid/questions/:questionId", findQuestionById);
   app.post("/api/quizzes/:qid/questions", createQuestion);

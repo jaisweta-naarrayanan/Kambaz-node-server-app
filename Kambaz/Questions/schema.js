@@ -4,6 +4,7 @@ const questionSchema = new mongoose.Schema(
   {
     _id: String,
     quiz: { type: String, ref: "QuizModel" },
+    questionGroup: { type: String, ref: "QuestionGroupModel" },
     title: { type: String, default: "New Question" },
     type: {
       type: String,
@@ -16,7 +17,11 @@ const questionSchema = new mongoose.Schema(
     choices: [String],
     correctAnswer: mongoose.Schema.Types.Mixed, // index for MC, boolean for T/F, not used for Fill
     // Fill in the Blank fields
-    possibleAnswers: [String],
+    // Fill in the Blank fields
+    possibleAnswers: [{
+      variable: String,
+      answers: [String]
+    }],
     caseSensitive: { type: Boolean, default: false },
   },
   { collection: "questions" }
